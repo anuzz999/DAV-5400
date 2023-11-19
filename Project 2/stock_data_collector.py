@@ -34,24 +34,17 @@ class StockDataCollector:
         }
 
     def fetch_intraday_data(self):
-        """
-        Fetch intraday stock data from Alpha Vantage.
-
-        Returns:
-        dict: Intraday stock data in JSON format, or None if an error occurs.
-        """
         try:
-            full_url = f"{self.base_url}?function={self.params['function']}&symbol={self.params['symbol']}&interval={self.params['interval']}&apikey={self.params['apikey']}"
-            print("Requesting URL:", full_url)  # This will print the full URL
             response = requests.get(self.base_url, params=self.params)
-            response.raise_for_status()  # This will raise an exception for HTTP error codes
-            return response.json()
-        except requests.exceptions.HTTPError as http_err:
-            print(f"HTTP error occurred: {http_err}")  # Print the HTTP error
-            print(response.text)  # Print the full response text
-        except Exception as err:
-            print(f"An error occurred: {err}")  # Print any other errors
-        return None
+            if response.status_code == 200:
+                return response.json()
+            else:
+                print(f"Error fetching data: {response.status_code}")
+                print(response.json())  # This will show the full error response
+                return None
+        except requests.exceptions.RequestException as e:
+            print(f"Request exception: {e}")
+            return None
 
     def get_stock_dataframe(self):
         """
@@ -63,13 +56,18 @@ class StockDataCollector:
         intraday_data = self.fetch_intraday_data()
         if intraday_data:
             time_series_key = next(
-                key for key in intraday_data if key.startswith("Time Series")
+                (key for key in intraday_data if key.startswith("Time Series")), None
             )
-            time_series_data = intraday_data[time_series_key]
-            df = pd.DataFrame.from_dict(time_series_data, orient="index")
-            df.columns = ["Open", "High", "Low", "Close", "Volume"]
-            df.index = pd.to_datetime(df.index)
-            df = df.apply(pd.to_numeric, errors="coerce")
-            return df
+            if time_series_key:
+                time_series_data = intraday_data[time_series_key]
+                df = pd.DataFrame.from_dict(time_series_data, orient="index")
+                df.columns = ["Open", "High", "Low", "Close", "Volume"]
+                df.index = pd.to_datetime(df.index)
+                df = df.apply(pd.to_numeric, errors="coerce")
+                return df
+            else:
+                print("Time series data not found in the response.")
+                return pd.DataFrame()
         else:
-            return pd.DataFrame()  # Return an empty DataFrame if there was an error
+            print("Failed to fetch or parse intraday data.")
+            return pd.DataFrame()
