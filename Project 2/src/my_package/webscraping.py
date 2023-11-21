@@ -1,3 +1,36 @@
+"""
+Web Scraping Module
+
+This module contains classes designed for web scraping tasks, specifically focusing on extracting hyperlinks and detailed data from web pages. It includes two main classes: LinkScraper and DataScraper.
+
+The LinkScraper class navigates through specified HTML classes on a website to collect relevant hyperlinks, supporting multi-level scraping to gather comprehensive link data. The DataScraper class focuses on extracting detailed data from each webpage provided by these links, capturing specific data points into a structured format.
+
+These classes are particularly useful in data collection for web analysis, market research, and content aggregation. They are designed to be flexible and efficient in scraping various types of web content while adhering to good practices in web scraping.
+
+Classes:
+    LinkScraper: A class to collect hyperlinks from a website based on specified HTML classes.
+    DataScraper: A class to extract detailed data from webpages.
+
+Example:
+    To use these classes for scraping:
+    ```python
+    base_url = 'https://www.example.com/'
+    class_names = ['class1', 'class2', 'class3', 'class4']
+    link_scraper = LinkScraper(base_url, class_names)
+    link_scraper.scrape()
+    link_scraper.save_to_csv('scraped_links.csv')
+
+    data_scraper = DataScraper()
+    data_scraper.scrape_sites(link_scraper.get_dataframe()['Link'].tolist())
+    data_scraper.save_to_csv('scraped_data.csv')
+    ```
+
+Note: This module requires external libraries requests, BeautifulSoup4, and pandas.
+
+Author: Anuj Kumar Shah
+Created: 11/21/2023
+"""
+
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin

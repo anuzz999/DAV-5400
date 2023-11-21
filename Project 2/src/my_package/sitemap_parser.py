@@ -1,3 +1,27 @@
+"""
+SitemapParser Module
+
+This module contains the SitemapParser class, which is designed for extracting and parsing sitemap information from websites. It leverages the robots.txt file of a given domain to locate and parse sitemap URLs. The class provides functionalities to fetch web content, parse XML sitemaps, and organize the extracted URLs into pandas DataFrames. Additionally, it includes methods for recursive sitemap parsing, data extraction, and saving the results as CSV files.
+
+The module is intended for use in web data extraction tasks where a comprehensive understanding of a website's structure via its sitemap is necessary. It is particularly useful in data analysis, machine learning projects, and web scraping tasks that require clean and structured data from website sitemaps.
+
+Classes:
+    SitemapParser: A class for parsing sitemaps from a specified domain.
+
+Example:
+    To use the SitemapParser class:
+    ```python
+    parser = SitemapParser('https://example.com')
+    parser.start_parsing()
+    parser.save_as_csv('output_directory')
+    ```
+
+Note: This module requires the external libraries requests, pandas, and BeautifulSoup4.
+
+Author: Anuj Kumar Shah
+Created: 11/21/2023
+"""
+
 import requests
 import pandas as pd
 from bs4 import BeautifulSoup

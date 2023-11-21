@@ -1,3 +1,28 @@
+"""
+StockDataCollector Module
+
+This module contains the StockDataCollector class, specifically designed for retrieving stock data from the Alpha Vantage API. The class facilitates fetching intraday stock data, handling API interactions, and structuring the data into a format suitable for analysis, particularly using pandas DataFrames.
+
+The StockDataCollector class is tailored for financial data analysis tasks, enabling users to easily access and analyze stock market data. It's particularly useful for data-driven investment strategies, market trend analysis, and educational purposes in finance and data science.
+
+Key features include API parameter management, error handling for API requests, and efficient conversion of JSON data to pandas DataFrames. The module is designed with an emphasis on ease of use, reliability, and scalability in handling financial data.
+
+Classes:
+    StockDataCollector: A class to interact with the Alpha Vantage API for stock data collection.
+
+Example:
+    To use the StockDataCollector class:
+    ```python
+    collector = StockDataCollector('your_api_key', 'AAPL')
+    df = collector.get_stock_dataframe()
+    ```
+
+Note: This module requires the external libraries requests and pandas.
+
+Author: Anuj Kumar Shah
+Created: 11/21/2023
+"""
+
 import requests
 import pandas as pd
 
