@@ -6,6 +6,7 @@ This project is designed to demonstrate advanced data handling techniques in Pyt
 
 ## Installation
 
+
 To install this package, follow these steps:
 
 1. Clone the repository:
@@ -48,19 +49,19 @@ Collects hyperlinks and detailed data from web pages.
 Example usage:
 
 from my_package.web_scraping import LinkScraper, DataScraper
+
 # Initialize and use the LinkScraper and DataScraper as required
 
-
-Contributing
+## Contributing
 Contributions to this project are welcome. Please fork the repository and submit a pull request with your changes.
 
 License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-Author
+# Author
 Anuj Kumar Shah - ashah5@mail.yu.edu
 
-Acknowledgements
+# Acknowledgements
 Thanks to Stefanie Molin's "Hands-On Data Analysis with Pandas" for guidance on building Python packages.
 
 
