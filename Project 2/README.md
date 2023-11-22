@@ -28,10 +28,12 @@ Each module in this package serves a different purpose:
 Used for parsing XML sitemaps from a specified domain.
 
 Example usage:
-```python
+
+python
 from my_package.sitemap_parser import SitemapParser
 parser = SitemapParser('https://example.com')
 parser.start_parsing()
+
 
 StockDataCollector
 Fetches and processes financial data using the Alpha Vantage API.
@@ -55,7 +57,7 @@ from my_package.web_scraping import LinkScraper, DataScraper
 ## Contributing
 Contributions to this project are welcome. Please fork the repository and submit a pull request with your changes.
 
-License
+# License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 # Author
