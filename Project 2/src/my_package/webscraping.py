@@ -1,36 +1,3 @@
-"""
-Web Scraping Module
-
-This module contains classes designed for web scraping tasks, specifically focusing on extracting hyperlinks and detailed data from web pages. It includes two main classes: LinkScraper and DataScraper.
-
-The LinkScraper class navigates through specified HTML classes on a website to collect relevant hyperlinks, supporting multi-level scraping to gather comprehensive link data. The DataScraper class focuses on extracting detailed data from each webpage provided by these links, capturing specific data points into a structured format.
-
-These classes are particularly useful in data collection for web analysis, market research, and content aggregation. They are designed to be flexible and efficient in scraping various types of web content while adhering to good practices in web scraping.
-
-Classes:
-    LinkScraper: A class to collect hyperlinks from a website based on specified HTML classes.
-    DataScraper: A class to extract detailed data from webpages.
-
-Example:
-    To use these classes for scraping:
-    ```python
-    base_url = 'https://www.example.com/'
-    class_names = ['class1', 'class2', 'class3', 'class4']
-    link_scraper = LinkScraper(base_url, class_names)
-    link_scraper.scrape()
-    link_scraper.save_to_csv('scraped_links.csv')
-
-    data_scraper = DataScraper()
-    data_scraper.scrape_sites(link_scraper.get_dataframe()['Link'].tolist())
-    data_scraper.save_to_csv('scraped_data.csv')
-    ```
-
-Note: This module requires external libraries requests, BeautifulSoup4, and pandas.
-
-Author: Anuj Kumar Shah
-Created: 11/21/2023
-"""
-
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
@@ -39,22 +6,23 @@ import pandas as pd
 
 class LinkScraper:
     """
-    A scraper that collects links from a given website. It navigates through specified
-    classes to extract relevant hyperlinks.
+    A scraper that collects hyperlinks from a website. It navigates through specified
+    HTML classes to extract relevant hyperlinks. This class is capable of multi-level
+    scraping, allowing for comprehensive link collection.
 
     Attributes:
         base_url (str): The base URL from which the scraper will start scraping.
         class_names (list): A list of class names to find the links within the HTML content.
-        df (DataFrame): A pandas DataFrame that stores the collected links.
+        df (pandas.DataFrame): A DataFrame that stores the collected links.
     """
 
     def __init__(self, base_url, class_names):
         """
         Initializes the LinkScraper with a base URL and class names.
 
-        Parameters:
+        Args:
             base_url (str): The starting URL for the scraper.
-            class_names (list): Class names to guide the scraping process.
+            class_names (list of str): Class names to guide the scraping process.
         """
         self.base_url = base_url
         self.class_names = class_names
@@ -64,11 +32,11 @@ class LinkScraper:
         """
         Fetches the HTML content of a given URL.
 
-        Parameters:
+        Args:
             url (str): The URL from which to fetch content.
 
         Returns:
-            str: The HTML content of the page.
+            str: The HTML content of the page, or an empty string if an error occurs.
         """
         try:
             response = requests.get(url)
@@ -82,14 +50,14 @@ class LinkScraper:
 
     def parse_for_links(self, content, class_name):
         """
-        Parses the HTML content to extract links contained within elements of a specified class.
+        Parses the HTML content to extract links within elements of the specified class.
 
-        Parameters:
+        Args:
             content (str): HTML content to be parsed.
             class_name (str): The class name within which to search for links.
 
         Returns:
-            list: A list of hyperlinks extracted from the content.
+            list of str: A list of hyperlinks extracted from the content.
         """
         soup = BeautifulSoup(content, "html.parser")
         containers = soup.find_all(class_=class_name)
@@ -105,11 +73,11 @@ class LinkScraper:
 
     def scrape(self):
         """
-        Initiates the scraping process from the base URL and collects links across multiple
+        Initiates the scraping process from the base URL. Collects links across multiple
         levels as specified by the class names.
 
         Returns:
-            DataFrame: A DataFrame containing all the scraped links.
+            pandas.DataFrame: A DataFrame containing all the scraped links.
         """
         all_links = []
         # First level scraping
@@ -141,8 +109,11 @@ class LinkScraper:
         """
         Saves the collected links to a CSV file.
 
-        Parameters:
+        Args:
             file_name (str): The name of the file to save the links.
+
+        Raises:
+            ValueError: If the DataFrame is empty and there is no data to save.
         """
         if self.df.empty:
             print("DataFrame is empty. Please scrape data before saving to CSV.")
@@ -152,11 +123,10 @@ class LinkScraper:
 
     def get_dataframe(self):
         """
-        Retrieves the DataFrame containing the scraped links. If the DataFrame is empty,
-        it initiates the scraping process.
+        Retrieves the DataFrame containing the scraped links. Initiates scraping if the DataFrame is empty.
 
         Returns:
-            DataFrame: The DataFrame containing the scraped links.
+            pandas.DataFrame: The DataFrame containing the scraped links.
         """
         if self.df.empty:
             self.scrape()
@@ -165,10 +135,14 @@ class LinkScraper:
 
 class DataScraper:
     """
-    A scraper that extracts detailed data from each webpage given by the links.
+    A scraper that extracts detailed data from webpages. It is designed to process the links
+    gathered by the LinkScraper class, extracting specific data points into a structured format.
+
+    This class is useful for in-depth analysis of webpage content, where specific pieces of
+    information are required from each page.
 
     Attributes:
-        data (list of dict): A list that stores all the extracted data points.
+        data (list of dict): A list to store the extracted data points from each webpage.
     """
 
     def __init__(self):
@@ -179,13 +153,13 @@ class DataScraper:
 
     def fetch_content(self, url):
         """
-        Fetches the HTML content of a given URL.
+        Fetches the HTML content of a given URL and creates a BeautifulSoup object.
 
-        Parameters:
+        Args:
             url (str): The URL from which to fetch content.
 
         Returns:
-            BeautifulSoup: The BeautifulSoup object of the page.
+            BeautifulSoup: A BeautifulSoup object of the page, or None if an error occurs.
         """
         try:
             response = requests.get(url)
@@ -197,25 +171,27 @@ class DataScraper:
 
     def clean_text(self, text):
         """
-        Cleans and formats the text extracted from the HTML.
+        Cleans and formats the text extracted from HTML content.
 
-        Parameters:
-            text (str): The text to clean.
+        Args:
+            text (str): The text to be cleaned.
 
         Returns:
-            str: The cleaned text.
+            str: The cleaned and formatted text.
         """
         return " ".join(text.split()) if text else ""
 
     def scrape(self, soup):
         """
-        Scrapes data from a BeautifulSoup object representing a webpage.
+        Scrapes and extracts data from a BeautifulSoup object representing a webpage.
 
-        Parameters:
+        This method looks for specific elements within the webpage to collect relevant data.
+
+        Args:
             soup (BeautifulSoup): The BeautifulSoup object to scrape data from.
 
         Returns:
-            dict: The extracted data.
+            dict: A dictionary containing extracted data points from the webpage.
         """
         if soup:
             description_elem = soup.find(itemprop="description")
@@ -278,10 +254,13 @@ class DataScraper:
 
     def scrape_sites(self, sites_list):
         """
-        Scrapes data from a list of websites.
+        Scrapes data from a list of websites, processing each site through the scrape method.
 
-        Parameters:
+        Args:
             sites_list (list of str): A list of URLs to scrape.
+
+        This method iterates over the list of URLs, fetches their content, and applies the
+        scrape method to extract relevant data.
         """
         for url in sites_list:
             print(f"Scraping {url}")
@@ -295,29 +274,20 @@ class DataScraper:
 
     def to_dataframe(self):
         """
-        Converts the scraped data into a pandas DataFrame.
+        Converts the scraped data into a pandas DataFrame for analysis and manipulation.
 
         Returns:
-            DataFrame: The DataFrame containing the scraped data.
+            pandas.DataFrame: A DataFrame containing all the scraped data.
         """
         return pd.DataFrame(self.data)
 
     def save_to_csv(self, filename):
         """
-        Saves the scraped data to a CSV file.
+        Saves the scraped data to a CSV file, providing a persistent, portable data format.
 
-        Parameters:
-            filename (str): The filename for the CSV where data will be saved.
+        Args:
+            filename (str): The filename to which the data will be saved.
         """
         df = self.to_dataframe()
         df.to_csv(filename, index=False)
         print(f"Data saved to {filename}")
-
-
-# Usage
-# You will have to uncomment and fill in the base_url and class_names as per your requirement
-# base_url = 'https://www.example.com/'
-# class_names = ['class1', 'class2', 'class3', 'class4']
-# scraper = LinkScraper(base_url, class_names)
-# scraper.scrape()
-# scraper.save_to_csv('scraped_links.csv')

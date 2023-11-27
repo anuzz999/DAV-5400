@@ -35,14 +35,26 @@ parser = SitemapParser('https://example.com')
 parser.start_parsing()
 
 
-StockDataCollector
-Fetches and processes financial data using the Alpha Vantage API.
+## Setup
 
-Example usage:
+### Obtaining an API Key
 
-from my_package.stock_data_collector import StockDataCollector
-collector = StockDataCollector('your_api_key', 'AAPL')
-df = collector.get_stock_dataframe()
+1. Go to the [Alpha Vantage website](https://www.alphavantage.co/support/#api-key) (or relevant site) and follow the instructions to obtain an API key.
+2. Once you have your API key, you'll need to set it as an environment variable on your machine.
+
+### Setting the Environment Variable
+
+#### For Windows:
+- Open the Start Search, type in "env", and choose "Edit the system environment variables".
+- In the System Properties window, click on the "Environment Variables..." button.
+- Under the "User variables" section, click "New...".
+- Enter `ALPHA_VANTAGE_API_KEY` as the variable name and your API key as the value.
+
+#### For macOS/Linux:
+- Open your terminal.
+- Add the following line to your `~/.bashrc`, `~/.zshrc`, or equivalent shell configuration file:
+  ```bash
+  export ALPHA_VANTAGE_API_KEY='your_api_key_here'
 
 
 Web Scraping (LinkScraper and DataScraper)

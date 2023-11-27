@@ -1,4 +1,6 @@
 # selenium_scraper.py
+
+# Importing necessary modules and classes for Selenium
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -6,18 +8,31 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import TimeoutException
+
+# Importing pandas for data manipulation
 import pandas as pd
+
+# Importing numpy for handling NaN (Not a Number) values
 from numpy import nan
 
 
 class FinancialDataScraper:
     """
-    This class provides methods to scrape financial data from NASDAQ using Selenium.
+    A class for scraping financial data from NASDAQ using Selenium.
+
+    This class provides methods to initiate a Selenium WebDriver session, navigate
+    to the NASDAQ website, and scrape financial data for a specific company based
+    on its stock symbol.
+
+    Attributes:
+        driver_path (str): The file path to the Chrome WebDriver executable.
+        browser (webdriver.Chrome): Instance of the Chrome WebDriver.
     """
 
     def __init__(self, driver_path):
         """
         Initializes the scraper with the path to the Chrome WebDriver.
+
         Args:
             driver_path (str): The file path to the Chrome WebDriver executable.
         """
@@ -26,25 +41,36 @@ class FinancialDataScraper:
 
     def start_browser(self):
         """
-        Starts a browser session.
+        Starts a Chrome browser session using Selenium WebDriver.
+
+        The method initiates a Chrome browser instance which can be used
+        for navigating and scraping web pages.
         """
         service = Service(self.driver_path)
         self.browser = webdriver.Chrome(service=service)
 
     def close_browser(self):
         """
-        Closes the browser session.
+        Closes the current Chrome browser session.
+
+        This method safely shuts down the Selenium WebDriver session.
         """
         if self.browser is not None:
             self.browser.quit()
 
     def get_elements_text(self, xpath):
         """
-        Finds elements using the given XPath and returns their text.
+        Retrieves the text content of elements found using a specified XPath.
+
+        This method searches for elements on the current webpage based on the
+        provided XPath. It returns the text contents of these elements.
+
         Args:
-            xpath (str): The XPath to find the elements.
+            xpath (str): The XPath string used to locate the elements.
+
         Returns:
-            list: A list containing the text of each element found.
+            list: A list containing the text of each element found. If no elements
+            are found, returns a list with four NaN values.
         """
         try:
             elements = self.browser.find_elements(By.XPATH, xpath)
@@ -54,11 +80,18 @@ class FinancialDataScraper:
 
     def scrape_company_data(self, symbol):
         """
-        Scrapes financial data for the given company symbol from NASDAQ.
+        Scrapes financial data for a specified company from the NASDAQ website.
+
+        This method navigates to the NASDAQ website for the given company symbol,
+        waits for the financial data to load, and then scrapes the relevant
+        information, such as quarterly financial data.
+
         Args:
-            symbol (str): The company's stock symbol.
+            symbol (str): The stock symbol of the company.
+
         Returns:
-            pd.DataFrame: A DataFrame containing the scraped data.
+            pd.DataFrame: A DataFrame containing the scraped financial data. If no data
+            is found or a timeout occurs, an empty DataFrame is returned.
         """
         url = f"http://www.nasdaq.com/symbol/{symbol}/financials?query=income-statement&data=quarterly"
 

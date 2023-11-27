@@ -1,27 +1,3 @@
-"""
-SitemapParser Module
-
-This module contains the SitemapParser class, which is designed for extracting and parsing sitemap information from websites. It leverages the robots.txt file of a given domain to locate and parse sitemap URLs. The class provides functionalities to fetch web content, parse XML sitemaps, and organize the extracted URLs into pandas DataFrames. Additionally, it includes methods for recursive sitemap parsing, data extraction, and saving the results as CSV files.
-
-The module is intended for use in web data extraction tasks where a comprehensive understanding of a website's structure via its sitemap is necessary. It is particularly useful in data analysis, machine learning projects, and web scraping tasks that require clean and structured data from website sitemaps.
-
-Classes:
-    SitemapParser: A class for parsing sitemaps from a specified domain.
-
-Example:
-    To use the SitemapParser class:
-    ```python
-    parser = SitemapParser('https://example.com')
-    parser.start_parsing()
-    parser.save_as_csv('output_directory')
-    ```
-
-Note: This module requires the external libraries requests, pandas, and BeautifulSoup4.
-
-Author: Anuj Kumar Shah
-Created: 11/21/2023
-"""
-
 import requests
 import pandas as pd
 from bs4 import BeautifulSoup
@@ -29,19 +5,48 @@ import os
 
 
 class SitemapParser:
+    """
+    A class for parsing sitemaps from a specified domain.
+
+    This class leverages the robots.txt file of a domain to locate sitemap URLs and
+    parse them. It extracts URLs from XML sitemaps and organizes them into pandas
+    DataFrames, supporting recursive parsing of nested sitemaps. The class also
+    provides functionality for saving parsed data to CSV files.
+
+    Attributes:
+        domain (str): The domain to parse sitemaps from.
+        sitemap_dataframes (dict): A dictionary holding the parsed sitemap data as pandas DataFrames.
+
+    Methods:
+        start_parsing: Initiates the parsing process.
+        fetch_content: Fetches content from a given URL.
+        parse_sitemap: Parses the sitemap from a URL.
+        create_dataframe: Creates a DataFrame from a list of URLs.
+        generate_key: Generates a unique key for the sitemap.
+        get_all_sitemaps: Parses all sitemaps found in the domain's robots.txt.
+        extract_subdirectories: Extracts subdirectories from URLs.
+        save_as_csv: Saves all sitemap DataFrames to CSV files.
+    """
+
     def __init__(self, domain):
         """
         Initializes the SitemapParser.
 
-        Parameters:
-        domain (str): The domain to parse sitemaps from.
+        Args:
+            domain (str): The domain to parse sitemaps from.
+
+        Raises:
+            ValueError: If the domain is not a valid URL format.
         """
         self.domain = domain
         self.sitemap_dataframes = {}
 
     def start_parsing(self):
         """
-        Initiates the parsing process of sitemaps found in the domain's robots.txt.
+        Initiates the parsing process of sitemaps found in the domain's robots.txt file.
+
+        This method fetches the robots.txt file of the specified domain, extracts
+        sitemap URLs, and then parses each URL to extract website URLs.
         """
         self.get_all_sitemaps()
 
@@ -49,11 +54,14 @@ class SitemapParser:
         """
         Fetches content from a URL.
 
-        Parameters:
-        url (str): URL to fetch content from.
+        Args:
+            url (str): URL to fetch content from.
 
         Returns:
-        str: Content of the page or an empty string if an error occurs.
+            str: Content of the page or an empty string if an error occurs.
+
+        Raises:
+            requests.exceptions.RequestException: If there is an issue with the HTTP request.
         """
         try:
             response = requests.get(url)
@@ -67,8 +75,8 @@ class SitemapParser:
         """
         Parses the sitemap from a given URL and extracts URLs into a DataFrame.
 
-        Parameters:
-        sitemap_url (str): URL of the sitemap to parse.
+        Args:
+            sitemap_url (str): URL of the sitemap to parse.
         """
         xml_content = self.fetch_content(sitemap_url)
         if not xml_content:
@@ -86,9 +94,9 @@ class SitemapParser:
         """
         Creates a DataFrame from a list of URLs and adds it to the sitemap_dataframes dictionary.
 
-        Parameters:
-        sitemap_url (str): URL of the sitemap being parsed.
-        urls (list): List of URLs to include in the DataFrame.
+        Args:
+            sitemap_url (str): URL of the sitemap being parsed.
+            urls (list): List of URLs to include in the DataFrame.
         """
         df = pd.DataFrame(urls, columns=["URLs"])
         df = self.extract_subdirectories(df)
@@ -99,11 +107,11 @@ class SitemapParser:
         """
         Generates a unique key for the sitemap.
 
-        Parameters:
-        sitemap_url (str): URL of the sitemap.
+        Args:
+            sitemap_url (str): URL of the sitemap.
 
         Returns:
-        str: A unique key for the sitemap.
+            str: A unique key for the sitemap.
         """
         return os.path.basename(sitemap_url).split(".")[0]
 
@@ -128,11 +136,11 @@ class SitemapParser:
         """
         Extracts subdirectories from the URLs in the DataFrame.
 
-        Parameters:
-        df (DataFrame): DataFrame with a column 'URLs' containing URLs.
+        Args:
+            df (DataFrame): DataFrame with a column 'URLs' containing URLs.
 
         Returns:
-        DataFrame: Updated DataFrame with subdirectory columns.
+            DataFrame: Updated DataFrame with subdirectory columns.
         """
 
         def extract(url):
@@ -153,8 +161,8 @@ class SitemapParser:
         """
         Saves all sitemap DataFrames to CSV files.
 
-        Parameters:
-        directory (str): Directory to save the CSV files in.
+        Args:
+            directory (str): Directory to save the CSV files in.
         """
         if not os.path.exists(directory):
             os.makedirs(directory)
