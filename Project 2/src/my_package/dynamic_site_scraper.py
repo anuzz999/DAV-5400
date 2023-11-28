@@ -22,11 +22,18 @@ class FinancialDataScraper:
 
     This class provides methods to initiate a Selenium WebDriver session, navigate
     to the NASDAQ website, and scrape financial data for a specific company based
-    on its stock symbol.
+    on its stock symbol. It handles the intricacies of web navigation, element 
+    location, and data extraction, presenting the final data in a structured format.
 
     Attributes:
         driver_path (str): The file path to the Chrome WebDriver executable.
-        browser (webdriver.Chrome): Instance of the Chrome WebDriver.
+        browser (webdriver.Chrome): Instance of the Chrome WebDriver, used for web scraping.
+
+    Methods:
+        start_browser: Initiates a Chrome browser session using Selenium WebDriver.
+        close_browser: Safely closes the Selenium WebDriver session.
+        get_elements_text: Retrieves text from web elements found using a specified XPath.
+        scrape_company_data: Scrapes financial data for a given company symbol from NASDAQ.
     """
 
     def __init__(self, driver_path):
