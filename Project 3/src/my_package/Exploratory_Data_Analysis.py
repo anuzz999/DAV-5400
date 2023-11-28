@@ -155,6 +155,27 @@ class DataCleaner:
 
 
 class EDA:
+    """
+    The EDA (Exploratory Data Analysis) class provides functionalities for
+    performing initial exploration on options trading data. It includes methods for
+    generating summary statistics, creating various plots, and analyzing trends within the data.
+
+    Attributes:
+    data (DataFrame): A pandas DataFrame containing the options trading data.
+
+    Methods:
+    summary_statistics():
+        Compute and return summary statistics for the dataset.
+    plot_iv_behavior(column, title):
+        Plot the implied volatility over time for a specified column.
+    plot_price_and_iv_trends():
+        Plot trends over time for Call and Put Option Prices and their Implied Volatilities.
+    plot_price_and_iv_trends_matplotlib():
+        Similar to plot_price_and_iv_trends but uses Matplotlib for plotting.
+    histogram_matplotlib(column, bins, title):
+        Create a histogram for a specified column using Matplotlib.
+    """
+
     def __init__(self, data):
         """
         Initialize the EDA object with a dataset.
