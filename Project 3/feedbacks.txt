@@ -1,0 +1,93 @@
+Apologies in advance, I spent an hour leaving you detailed comments in each section and Canvas lost them all. I don't remember everything and
+I don't have the time to reread all of this, so I will try to add what I do remember.
+
+Deductions:
+* Modules provided but not a package: -5 points
+* Poor formatting on code or no docstrings: -5 points
+
+I think you did a great job on your first attempt of this assignment. Some general suggestions in addition to specific comments in the individual sections for improving upon this in Project 3:
+1. Write more concisely. Read through what you have multiple times: trim what you don't need, perhaps move things around to earlier sections, etc.
+2. For your code, be consistent with your docstring format. Different files have different styles, which looks sloppy. Consider the suggestions I made in the EDA and Inference section comments for restructuring. Make sure you are following Python naming conventions.
+Stefanie Molin , Nov 8 at 10:15pm
+Don't forget that classes and modules also need docstrings. If you are curious how a Dataset + DataLoader structure could work, I have this exact paradigm in a project of mine (very unrelated topic, but similar need) here: https://github.com/stefmolin/data-morph
+Stefanie Molin , Nov 8 at 10:47pm
+
+Introduction:
+Comments
+Explain what the Greeks mean here in detail. Perhaps a short intro on options as well and call vs. put.
+
+Data Summary :
+Comments
+Move the data cleaning to EDA and just focus on the basics of the data you get. Also, you talk about needing to evaluate what to do with the nulls, but then abruptly drop them with no explanation of why. You should look into why they are null first. Is there a pattern?
+
+It looks like you are reading the same dataset in 3 times too...
+
+I would suggest you create a Dataset class that has a DataFrame inside of it and basic viz functionality that you need. The DataLoader can than create a Dataset object by reading in a file.
+
+Explain in more detail why you drop the columns you did. Is it possible that one of them has a relation with what you were looking into?
+
+Exploratory Data Analysis:
+Comments
+Your C_IV summary statistics are messed up in your Markdown section (double decimal points).
+
+Histograms with dates have non-legible x-axis labels.
+
+For histograms where we can only see 1 bin, I'd like to see you include an inset plot of a histogram for just that region in Project 3.
+
+For columns that have typical ranges, annotate those on your plots. At some point you mention red and green lines, but I didn't see anything.
+
+Be sure to explain in-the-money etc. to your reader.
+
+Your EDA class could take in the Dataset and generate visuals as an idea of how that would work.
+
+Since EDA includes multivariate analysis, you should mention to the reader that you will be doing that in your inference section as it is part of answering your research questions.
+
+Inference:
+Comments
+Scatter plots should use alpha for point transparency. I'd also like to see you explore hexbins and Seaborn's jointplot in Project 3 for these plots.
+
+Look into the gaps in your days to expiry plots. Whenever a consumer of your visuals sees some gaps, dips, or spikes you should expect that will be a question and be prepared to answer why those are present.
+
+Missing matplotlib version of the heatmap 😊 Remember that this heatmap is only showing you the linear correlation and you saw that the relationships you looked at weren't linear. I would suggest you pick a different visual. Also, you should never just use this without confirming visually that the relationship is indeed linear: you can have a strong linear correlation with non-linear data. I don't see a strong correlation with delta and strike distance in your visual.
+
+For the code here, you should have methods like plot_iv_vs_vega() in your code base and just call those here. These can then call your plot_scatter() logic.
+
+
+General Suggestions:
+
+Write more concisely and structure the content efficiently.
+Ensure consistency in docstring format across different files and adhere to Python naming conventions.
+Include docstrings for classes and modules, not just methods.
+Review the suggested Dataset + DataLoader structure for managing data.
+Specific Section Feedback:
+
+Introduction:
+Provide detailed explanations of the Greeks and a brief introduction to options, calls, and puts.
+
+Data Summary:
+Consider moving data cleaning to the EDA section and focus on basic data characteristics in the Data Summary.
+Investigate the reason for null values before dropping them and explain the decision-making process.
+Avoid reading the same dataset multiple times.
+Create a Dataset class for managing data and visualization functionalities.
+Justify why certain columns were dropped and whether they could be relevant to the research.
+
+Exploratory Data Analysis (EDA):
+Correct summary statistics formatting issues.
+Improve histogram legibility, especially with date axes and single-bin histograms.
+Annotate typical ranges on plots and clarify terms like "in-the-money."
+Consider enhancing the EDA class to generate visuals from the Dataset.
+Mention multivariate analysis in the EDA section, linking it to the inference section.
+
+Inference:
+Use alpha for point transparency in scatter plots and explore hexbins and jointplots.
+Investigate and explain any gaps or anomalies in data plots.
+Include Matplotlib visualizations where missing, such as the heatmap.
+Recognize the limitations of linear correlation and consider alternative visuals.
+Implement specific methods for visualizations in the codebase for reuse.
+
+Technical Aspects:
+The code should be structured into a Python package with consistent formatting and documentation.
+Implement classes with appropriate methods that are well-documented and follow best practices.
+
+
+
