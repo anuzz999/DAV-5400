@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="my_package",
+    name="spy_edas",
     version="0.1.0",
     author="Anuj Kumar Shah",
     author_email="ashah5@mail.yu.edu",
