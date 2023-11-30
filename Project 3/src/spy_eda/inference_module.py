@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 import pandas as pd
@@ -36,7 +35,7 @@ class Inference:
         self.data = data
 
     @staticmethod
-    def correlation_analysis(data):
+    def correlation_analysis(self):
         """
         Perform correlation analysis on the given data.
 
@@ -46,6 +45,7 @@ class Inference:
         Returns:
         None: Plots the correlation heatmap.
         """
+
         correlation_matrix = self.data.corr()
 
         plt.figure(figsize=(12, 10))
@@ -54,7 +54,7 @@ class Inference:
         plt.show()
 
     @staticmethod
-    def multivariate_analysis(data):
+    def multivariate_analysis(self):
         """
         Perform multivariate analysis on selected variables.
 
@@ -84,7 +84,7 @@ class Inference:
         plt.show()
 
     @staticmethod
-    def temporal_analysis(data):
+    def temporal_analysis(self, data):
         """
         Plot temporal trends in the data.
 
