@@ -1,6 +1,8 @@
+# This module provides classes for conducting inference analysis on financial options data.
+
+# Importing necessary libraries
 import seaborn as sns
 import numpy as np
-import pandas as pd
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
@@ -34,7 +36,6 @@ class Inference:
         """
         self.data = data
 
-    @staticmethod
     def correlation_analysis(self):
         """
         Perform correlation analysis on the given data.
@@ -53,7 +54,6 @@ class Inference:
         plt.title("Correlation Heatmap of Option Chain Data Variables")
         plt.show()
 
-    @staticmethod
     def multivariate_analysis(self):
         """
         Perform multivariate analysis on selected variables.
@@ -83,8 +83,7 @@ class Inference:
         )
         plt.show()
 
-    @staticmethod
-    def temporal_analysis(self, data):
+    def temporal_analysis(self):
         """
         Plot temporal trends in the data.
 
