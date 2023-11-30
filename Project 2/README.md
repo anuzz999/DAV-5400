@@ -33,7 +33,7 @@ Example usage:
 from fin_data_scraper.xml_sitemap_parser import SitemapParser
 parser = SitemapParser('https://example.com')
 parser.start_parsing()
-
+```
 
 StockDataCollector
 Used for collecting stock data using financial APIs.
@@ -43,6 +43,7 @@ Example usage:
 ```python
 from fin_data_scraper.api_data_fetcher import StockDataCollector
 # Usage code for StockDataCollector
+```
 
 Web Scraping (LinkScraper and DataScraper)
 Collects hyperlinks and detailed data from web pages.
@@ -51,7 +52,7 @@ Example usage:
 ```python
 from fin_data_scraper.html_content_scraper import LinkScraper, DataScraper
 # Initialize and use the LinkScraper and DataScraper as required
-
+```
 
 ## Setup
 
@@ -72,7 +73,8 @@ from fin_data_scraper.html_content_scraper import LinkScraper, DataScraper
 - Open your terminal.
 - Add the following line to your `~/.bashrc`, `~/.zshrc`, or equivalent shell configuration file:
   ```bash
-  export ALPHA_VANTAGE_API_KEY='your_api_key_here'
+  export ALPHA_VANTAGE_API_KEY='your_api_key_here' 
+  ```
 
 
 
