@@ -1,3 +1,6 @@
+""" Classes for parsing Sitemaps from a specified domain website"""
+
+# importing necessary libraries
 import requests
 import pandas as pd
 from bs4 import BeautifulSoup

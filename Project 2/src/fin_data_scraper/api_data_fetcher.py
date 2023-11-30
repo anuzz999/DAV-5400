@@ -1,3 +1,7 @@
+"""Module for fetching and structuring stock data from the Alpha Vantage API  
+and then conducting statistical analysis and visualization on stock market data."""
+
+
 import requests
 import pandas as pd
 import pandas as pd

@@ -1,3 +1,7 @@
+""" This module contains the LinkScraper class for extracting hyperlinks from a website using multi-level scraping and
+ the DataScraper class for detailed data extraction from webpages using BeautifulSoup """
+
+
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin

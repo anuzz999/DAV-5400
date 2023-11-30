@@ -2,14 +2,14 @@
 
 ## Description
 
-This project is designed to demonstrate advanced data handling techniques in Python, including XML parsing, API interaction, web scraping, and data analysis. It consists of three main modules: `SitemapParser`, `StockDataCollector`, and a web scraping module encompassing `LinkScraper` and `DataScraper`.
+This project is designed to demonstrate advanced data handling techniques in Python, including XML parsing, API interaction, web scraping, and data analysis. It consists of three main modules: `SitemapParser`, `StockDataCollector`, and web scraping modules encompassing `LinkScraper` and `DataScraper`.
 
 ## Installation
-
 
 To install this package, follow these steps:
 
 1. Clone the repository:
+
 git clone https://github.com/anuzz999/DAV-5400.git
 
 2. Navigate to the project directory:
@@ -29,10 +29,28 @@ Used for parsing XML sitemaps from a specified domain.
 
 Example usage:
 
-python
-from my_package.sitemap_parser import SitemapParser
+```python
+from fin_data_scraper.xml_sitemap_parser import SitemapParser
 parser = SitemapParser('https://example.com')
 parser.start_parsing()
+
+
+StockDataCollector
+Used for collecting stock data using financial APIs.
+
+Example usage:
+
+```python
+from fin_data_scraper.api_data_fetcher import StockDataCollector
+# Usage code for StockDataCollector
+
+Web Scraping (LinkScraper and DataScraper)
+Collects hyperlinks and detailed data from web pages.
+
+Example usage:
+```python
+from fin_data_scraper.html_content_scraper import LinkScraper, DataScraper
+# Initialize and use the LinkScraper and DataScraper as required
 
 
 ## Setup
@@ -57,14 +75,7 @@ parser.start_parsing()
   export ALPHA_VANTAGE_API_KEY='your_api_key_here'
 
 
-Web Scraping (LinkScraper and DataScraper)
-Collects hyperlinks and detailed data from web pages.
 
-Example usage:
-
-from my_package.web_scraping import LinkScraper, DataScraper
-
-# Initialize and use the LinkScraper and DataScraper as required
 
 ## Contributing
 Contributions to this project are welcome. Please fork the repository and submit a pull request with your changes.
@@ -76,6 +87,8 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 Anuj Kumar Shah - ashah5@mail.yu.edu
 
 # Acknowledgements
+
+Acknowledgements
 Thanks to Stefanie Molin's "Hands-On Data Analysis with Pandas" for guidance on building Python packages.
 
 
