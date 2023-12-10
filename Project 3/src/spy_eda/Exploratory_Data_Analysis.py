@@ -1,3 +1,6 @@
+# This module contains classes for cleaning data and performing exploratory data analysis on options trading datasets.
+
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -154,9 +157,9 @@ class DataCleaner:
             print(f"An error occurred while saving the data: {e}")
 
 
-class EDA:
+class ExploratoryDataAnalysis:
     """
-    The EDA (Exploratory Data Analysis) class provides functionalities for
+    The ExploratoryDataAnalysis class provides functionalities for
     performing initial exploration on options trading data. It includes methods for
     generating summary statistics, creating various plots, and analyzing trends within the data.
 
@@ -178,7 +181,7 @@ class EDA:
 
     def __init__(self, data):
         """
-        Initialize the EDA object with a dataset.
+        Initialize the ExploratoryDataAnalysis object with a dataset.
 
         Parameters:
         data (DataFrame): The dataset to be analyzed.
@@ -383,6 +386,36 @@ class EDA:
             linewidth=1,
             label="Median",
         )
+        plt.legend()
+        plt.show()
+
+    def plot_greeks_vs_dte(self):
+        """
+        Plots various Greek values against Days to Expiry (DTE) for options data.
+
+        This method visualizes the relationship between Greeks like Delta, Gamma, Vega, Theta, etc.,
+        and the time left until the option's expiry.
+        """
+        greek_columns = [
+            "C_DELTA",
+            "C_GAMMA",
+            "C_VEGA",
+            "C_THETA",
+            "C_RHO",
+            "P_DELTA",
+            "P_GAMMA",
+            "P_VEGA",
+            "P_THETA",
+            "P_RHO",
+        ]
+        plt.figure(figsize=(15, 10))
+
+        for greek in greek_columns:
+            plt.scatter(self.data["DTE"], self.data[greek], alpha=0.5, label=greek)
+
+        plt.title("Greek Values vs. Days to Expiry (DTE)")
+        plt.xlabel("Days to Expiry (DTE)")
+        plt.ylabel("Greek Values")
         plt.legend()
         plt.show()
 

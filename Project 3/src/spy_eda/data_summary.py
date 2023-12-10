@@ -1,7 +1,28 @@
+# Module for data loading, inspection, summarization, and integrity checks in exploratory data analysis.
+
+
+# importing required libraries
 import pandas as pd
 
 
 class DataSummary:
+    """
+    Provides methods for basic exploratory data analysis of datasets loaded from file paths.
+    Offers functionality to load, inspect, summarize, and check data for integrity and outliers.
+
+    Attributes:
+        file_paths (list of str): List of file paths for the data files to be analyzed.
+
+    Methods:
+        load_data: Load and concatenate data from file_paths into a single DataFrame.
+        inspect_data: Print basic information about the DataFrame's structure.
+        summarize_data: Provide summary statistics of numerical columns in the DataFrame.
+        check_missing_values: Count missing values in each column of the DataFrame.
+        detect_outliers: Identify outliers in the DataFrame using the IQR method.
+        validate_data_types_ranges: Check the data types and value ranges of the DataFrame's columns.
+
+    """
+
     def __init__(self, file_paths):
         """
         Initialize the DataSummary with file paths.
