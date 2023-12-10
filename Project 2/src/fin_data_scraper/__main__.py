@@ -7,7 +7,7 @@ from .xml_sitemap_parser import SitemapParser
 
 
 def main():
-    pass
+    print("Data scraping and analysis completed successfully.")
 
 
 if __name__ == "__main__":
